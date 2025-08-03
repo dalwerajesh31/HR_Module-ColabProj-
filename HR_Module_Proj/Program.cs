@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace HR_Module_Proj
 {
     public class Program
@@ -8,6 +10,7 @@ namespace HR_Module_Proj
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<Data.ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("HRModuleDB")));
 
             var app = builder.Build();
 
