@@ -1,0 +1,144 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model HR_Module_Proj.Models.MasterStaff
+<h1> Enroll Staff</h1>
+<form asp-action="AddStaff" asp-controller="Staff" method="post">
+    <div class="card">
+        <div class="card-body">
+            @* **************** Personal Info *************** *@
+            <div class="row">
+                <div class="col-12 col-md-3 col-sm-12">
+                    <label class="form-label">Staff Name</label><span style="color:red">*</span>
+                    <input type="text" class="form-control" asp-for="StaffName" />
+                </div>
+                <div class="col-12 col-md-3 col-sm-12">
+                    <label class="form-label">ERPID</label><span style="color:red">*</span>
+                    <input type="text" class="form-control" asp-for="EMPStaffID" />
+                </div>
+                <div class="col-12 col-md-3 col-sm-6">
+                    <label class="form-label">Phone No</label><span style="color:red">*</span>
+                    <input class="form-control" type="text" asp-for="MobileNo" />
+                </div>
+                <div class="col-12 col-md-3 col-sm-6">
+                    <label class="form-label">Email</label><span style="color:red">*</span>
+                    <input class="form-control" type="text" asp-for="Email" />
+                </div>
+                <div class="col-12 col-md-3 col-sm-6">
+                    <label class="form-label">DOB</label><span style="color:red">*</span>
+                    <input class="form-control" type="text" asp-for="DOB" />
+                </div>
+                <div class="col-12 col-md-3 col-sm-6">
+                    <label class="form-label">Gender</label><span style="color:red">*</span>
+                    <input class="form-control" type="text" asp-for="Gender" />
+                </div>
+            </div>
+            <div class="row">
+               @*  <div class="col-md-3 col-sm-12 col-12">
+                    <label class="form-label"> Marital Status:</label><span style="color:red">*</span>
+                    @Html.DropDownListFor(m => m.MaritalStatus, Model.MaritalStatusList, "Select Status", new { @class = "from-control" })
+                </div> *@
+                <div class="col-md-3 col-sm-12 mb-3">
+                    <label class="form-label d-block">
+                        Marital Status: <span class="text-danger">*</span>
+                    </label>
+                    @Html.DropDownListFor(m => m.MaritalStatus, Model.MaritalStatusList, "Select Status", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.MaritalStatus, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-12 col-md-3 col-sm-6">
+                    <label class="form-label">Blood Group</label><span style="color:red">*</span>
+                    <input class="form-control" type="text" asp-for="BloodGroup" />
+                </div>
+                <div class="col-12 col-md-3 col-sm-6">
+                    <label class="form-label">Joining Date</label><span style="color:red">*</span>
+                    <input class="form-control" type="text" asp-for="JoiningDate" />
+                </div>
+                <div class="col-12 col-md-3 col-sm-6">
+                    <label class="form-label">Work Group</label>
+                    <input class="form-control" type="text" asp-for="WorkGroup" />
+                </div>
+            </div>
+            @* ********************* Educational Info ********************* *@
+            <div class="row">
+                <div class="col-12 col-md-3 col-sm-6">
+                    <label class="form-label">Religion</label>
+                    <input class="form-control" type="text" asp-for="Religion" />
+                </div>
+                <div class="col-12 col-md-3 col-sm-6">
+                    <label class="form-label">Category</label>
+                    <input class="form-control" type="text" asp-for="Category" />
+                </div>
+                <div class="col-12 col-md-3 col-sm-6">
+                    <label class="form-label">Caste</label>
+                    <input class="form-control" type="text" asp-for="Caste" />
+                </div>
+                <div class="col-12 col-md-3 col-sm-6">
+                    <label class="form-label">Sub Caste</label>
+                    <input class="form-control" type="text" asp-for="SubCaste" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-3 col-sm-6">
+                    <label class="form-label">Highest Qualification</label><span style="color:red">*</span>
+                    <input class="form-control" type="text" asp-for="HighestQualification" />
+                </div>
+               @*  <div class="col-md-3 col-sm-12 col-12">
+                    <label class="form-label"> Designation</label><span style="color:red">*</span>
+                    @Html.DropDownListFor(m => m.DeptID, Model.DesignationList, "Select Designation", new { @class = "from-control" })
+                </div>
+                <div class="col-md-3 col-sm-12 col-12">
+                    <label class="form-label"> Department</label><span style="color:red">*</span>
+                    @Html.DropDownListFor(m => m.DesignationID, Model.DepartmentList, "Select Department", new { @class = "from-control" })
+                </div> *@
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <label class="form-label d-block">
+                        Designation <span class="text-danger">*</span>
+                    </label>
+                    @Html.DropDownListFor(m => m.DesignationID, Model.DesignationList, "Select Designation", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.DesignationID, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <label class="form-label d-block">
+                        Department <span class="text-danger">*</span>
+                    </label>
+                    @Html.DropDownListFor(m => m.DeptID, Model.DepartmentList, "Select Department", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.DeptID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @* ************************ Address Info ******************************* *@
+            <div class="row">
+                <div class="col-12 col-md-3 col-sm-6">
+                    <label class="form-label">Current Address</label><span style="color:red">*</span>
+                    <input class="form-control" type="text" asp-for="Address" />
+                </div>
+                <div class="col-12 col-md-3 col-sm-6">
+                    <label class="form-label">Country</label>
+                    <input class="form-control" type="text" asp-for="Country" />
+                </div>
+                <div class="col-12 col-md-3 col-sm-6">
+                    <label class="form-label">State</label>
+                    <input class="form-control" type="text" asp-for="State" />
+                </div>
+                <div class="col-12 col-md-3 col-sm-6">
+                    <label class="form-label">City</label>
+                    <input class="form-control" type="text" asp-for="City" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-3 col-sm-6">
+                    <label class="form-label">PinCode</label>
+                    <input class="form-control" type="text" asp-for="Pincode" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12 col-12 mt-3">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

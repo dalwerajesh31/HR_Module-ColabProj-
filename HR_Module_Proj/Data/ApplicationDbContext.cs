@@ -8,6 +8,7 @@ namespace HR_Module_Proj.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-        DbSet<Staffs> MasterStaffDetails { get; set; } = null!;
+       public DbSet<Staffs> MasterStaffDetails { get; set; } = null!;
+       public DbSet<MasterDesignation> MasterDesignation { get; set; } = null!;
     }
 }

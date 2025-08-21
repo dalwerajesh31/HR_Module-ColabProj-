@@ -1,0 +1,92 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model HR_Module_Proj.Models.Designations
+
+<h2>Designation Management</h2>
+
+<div class="row">
+    <!-- Form Section -->
+    <div class="col-md-4">
+        <h4 id="form-title">Add Designation</h4>
+
+        <form id="designationForm">
+            <input type="hidden" id="DesignationID" name="DesignationID" value="" />
+
+            <div class="mb-3">
+                <label class="form-label">Designation Name</label>
+                <input type="text" id="DesignationName" name="DesignationName" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Short Name</label>
+                <input type="text" id="ShortName" name="ShortName" class="form-control" />
+            </div>
+
+            <div class="form-check mb-3">
+                <input type="checkbox" id="IsActive" name="IsActive" class="form-check-input" />
+                <label class="form-check-label" for="IsActive">Active</label>
+            </div>
+
+            <button type="submit" class="btn btn-success">Save</button>
+            <button type="button" id="resetBtn" class="btn btn-secondary">Reset</button>
+        </form>
+    </div>
+
+    <!-- List Section -->
+    <div class="col-md-8">
+        <h4>Designation List</h4>
+        <div id="designationList">
+            @await Html.PartialAsync("_DesignationListPartial", Model.DesignationList)
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Submit form via AJAX
+        $("#designationForm").on("submit", function (e) {
+            e.preventDefault();
+            $.post("/MasterDesignation/Save", $(this).serialize(), function (result) {
+                $("#designationList").html(result);
+                resetForm();
+            });
+        });
+
+        // Reset form
+        $("#resetBtn").on("click", function () {
+            resetForm();
+        });
+
+        function resetForm() {
+            $("#DesignationID").val("");
+            $("#DesignationName").val("");
+            $("#ShortName").val("");
+            $("#IsActive").prop("checked", false);
+            $("#form-title").text("Add Designation");
+        }
+
+        // Edit button → populate form
+        $(document).on("click", ".edit-btn", function () {
+            $("#DesignationID").val($(this).data("id"));
+            $("#DesignationName").val($(this).data("name"));
+            $("#ShortName").val($(this).data("short"));
+            $("#IsActive").prop("checked", $(this).data("active") === true || $(this).data("active") === "True");
+            $("#form-title").text("Edit Designation");
+        });
+
+        // Delete button → AJAX call
+        $(document).on("click", ".delete-btn", function () {
+            if (confirm("Are you sure you want to delete this designation?")) {
+                $.post("/MasterDesignation/Save", { DesignationID: $(this).data("id"), command: "Delete" }, function (result) {
+                    $("#designationList").html(result);
+                    resetForm();
+                });
+            }
+        });
+    </script>
+}
+
