@@ -35,9 +35,9 @@
                         <td>@StaffList.StaffName</td>
                         <td>@StaffList.MobileNo</td>
                         <td>@StaffList.Email</td>
-                        <td>@StaffList.DOB?.ToString("dd-MM-yyyy")</td> <!-- Fixed Problem 1 -->
+                        <td>@StaffList.DOB.ToString("dd-MM-yyyy")</td> <!-- Fixed Problem 1 -->
                         <td>@StaffList.Gender</td>
-                        <td>@StaffList.JoiningDate?.ToString("dd-MM-yyyy")</td> <!-- Fixed Problem 2 -->
+                        <td>@StaffList.JoiningDate.ToString("dd-MM-yyyy")</td> <!-- Fixed Problem 2 -->
                         <td>
                             <a asp-controller="Staff"
                                asp-action="Edit"

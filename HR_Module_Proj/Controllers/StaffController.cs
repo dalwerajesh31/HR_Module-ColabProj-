@@ -502,8 +502,8 @@ using Microsoft.EntityFrameworkCore;
                     StaffName = model.StaffName,
                     Gender = model.Gender,
                     MaritalStatus = model.MaritalStatus,
-                    DOB = model.DOB
-                };
+                    DOB = (DateTime)model.DOB
+				};
                 await dbContext.MasterStaffDetails.AddAsync(newStaff);
             }
             else
@@ -515,7 +515,7 @@ using Microsoft.EntityFrameworkCore;
                     existing.StaffName = model.StaffName;
                     existing.Gender = model.Gender;
                     existing.MaritalStatus = model.MaritalStatus;
-                    existing.DOB = model.DOB;
+                    existing.DOB = (DateTime)model.DOB;
                     dbContext.MasterStaffDetails.Update(existing);
                 }
             }
