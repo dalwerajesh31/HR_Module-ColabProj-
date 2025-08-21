@@ -23,7 +23,7 @@ namespace HR_Module_Proj.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert([Bind(Prefix = "department")] MasterDepartment model)
+        public async Task<IActionResult> SaveAndUpdate([Bind(Prefix = "department")] MasterDepartment model)
         {
             if (ModelState.IsValid)
             {
