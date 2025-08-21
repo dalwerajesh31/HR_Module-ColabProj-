@@ -1,0 +1,141 @@
+﻿@model HR_Module_Proj.Models.MasterDepartmentVM
+
+@{
+	ViewData["Title"] = "Departments Register";
+}
+
+<style>
+	.auto-width-table {
+		width: auto !important;
+		table-layout: auto !important;
+	}
+
+		.auto-width-table th,
+		.auto-width-table td {
+			white-space: nowrap;
+		}
+</style>
+
+
+
+<div class="container py-4">
+	<h2 class="mb-3">Master Department</h2>
+	<div class="row g-3">
+		<div class="col-md-4">
+			<div class="card shadow-sm">
+				<div class="card-body">
+					<h5 id="formTitle" class="card-title">Add Department</h5>
+					<form asp-action="Upsert" method="post">
+						<input asp-for="department.Id" type="hidden" />
+
+						<div class="mb-3">
+							<label asp-for="department.DepartmentName" class="control-label m-1">Department Name</label>
+							<input asp-for="department.DepartmentName" class="form-control" />
+							<span asp-validation-for="department.DepartmentName" class="text-danger"></span>
+						</div>
+
+						<div class="mb-3">
+							<label asp-for="department.ShortName" class="control-label m-1">Short Name</label>
+							<input asp-for="department.ShortName" class="form-control" />
+							<span asp-validation-for="department.ShortName" class="text-danger"></span>
+						</div>
+
+						<div class="form-group form-check col-1 m-4">
+							<input asp-for="department.IsActive" class="form-check-input" />
+							<label asp-for="department.IsActive" class="form-check-label">IsActive</label>
+						</div>
+
+						<div class="d-flex gap-2">
+							<button id="submitBtn" type="submit" class="btn btn-primary">Save</button>
+							<button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button>
+							<button id="regBtn" type="button" class="btn btn-dark" onclick="toggleRegister()">Register</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-8" id="register">
+			<table class="table table-striped table-bordered table-hover">
+				<thead>
+					<tr>
+						<th>Department Name</th>
+						<th>Short Name</th>
+						<th>Is Active</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model.departments)
+					{
+						<tr data-id="@item.Id" data-departmentName="@item.DepartmentName" data-shortname="@item.ShortName" data-isactive="@item.IsActive">
+							<td>@item.DepartmentName</td>
+							<td>@item.ShortName</td>
+							<td>@(item.IsActive ? "Yes" : "No")</td>
+							<td>
+								<button type="button" class="btn btn-sm btn-primary edit-btn">Edit</button>
+								<form asp-action="Delete" asp-route-id="@item.Id" method="post" style="display:inline;">
+									<button type="submit" class="btn btn-sm btn-danger"
+											onclick="return confirm('Are you sure you want to delete this item?');">
+										Delete
+									</button>
+								</form>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+	<script>
+		function toggleRegister() {
+		// const table = document.querySelector('.col-md-8');
+		// if (table.style.display === 'none') {
+		// table.style.display = '';
+		// } else {
+		// table.style.display = 'none';
+		// }
+		var name = document.getElementById('regBtn').innerText;
+			if(name == 'Register'){
+				$('#register').hide();
+				document.getElementById('regBtn').innerText = 'Form';
+			}
+			else{
+				$('#register').show();
+				document.getElementById('regBtn').innerText = 'Register';
+			}
+		}
+
+		function resetForm() {
+		document.querySelector('[name="department.Id"]').value = 0;
+		document.querySelector('[name="department.DepartmentName"]').value = '';
+		document.querySelector('[name="department.ShortName"]').value = '';
+		document.querySelector('[name="department.IsActive"]').checked = true;
+		document.getElementById('formTitle').innerText = 'Add Department';
+		document.getElementById('submitBtn').innerText = 'Save';
+		}
+
+
+		document.querySelectorAll('.edit-btn').forEach(btn => {
+		btn.addEventListener('click', function () {
+		const tr = this.closest('tr');
+		document.querySelector('[name="department.Id"]').value = tr.dataset.id;
+		document.querySelector('[name="department.DepartmentName"]').value = tr.dataset.departmentname;
+		document.querySelector('[name="department.ShortName"]').value = tr.dataset.shortname;
+		document.querySelector('[name="department.IsActive"]').checked = tr.dataset.isactive;
+		document.getElementById('formTitle').innerText = 'Edit Department';
+		document.getElementById('submitBtn').innerText = 'Update';
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+		});
+		});
+	</script>
+}
+
+@* ******************************************************************* *@
+
+
