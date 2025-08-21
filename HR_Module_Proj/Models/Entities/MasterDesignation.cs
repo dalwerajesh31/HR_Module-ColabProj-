@@ -7,11 +7,13 @@ namespace HR_Module_Proj.Models.Entities
     public class MasterDesignation
     {
         [Key]   // <-- Mark as primary key
-        public Guid DesignationID { get; set; }
+        public int DesignationID { get; set; }
         [Required]
         [MaxLength(200)]
         public string DesignationName { get; set; }
         public string ShortName { get; set; }
-        public bool IsActive { get; set; }
+		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+		public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+		public bool IsActive { get; set; }
     }
 }

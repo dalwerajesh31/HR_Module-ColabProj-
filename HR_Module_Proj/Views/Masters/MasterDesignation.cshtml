@@ -1,92 +1,141 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model HR_Module_Proj.Models.Designations
+
 @{
+	ViewData["Title"] = "Designation Register";
 }
-@model HR_Module_Proj.Models.Designations
 
-<h2>Designation Management</h2>
+<style>
+	.auto-width-table {
+		width: auto !important;
+		table-layout: auto !important;
+	}
 
-<div class="row">
-    <!-- Form Section -->
-    <div class="col-md-4">
-        <h4 id="form-title">Add Designation</h4>
+		.auto-width-table th,
+		.auto-width-table td {
+			white-space: nowrap;
+		}
+</style>
 
-        <form id="designationForm">
-            <input type="hidden" id="DesignationID" name="DesignationID" value="" />
 
-            <div class="mb-3">
-                <label class="form-label">Designation Name</label>
-                <input type="text" id="DesignationName" name="DesignationName" class="form-control" required />
-            </div>
 
-            <div class="mb-3">
-                <label class="form-label">Short Name</label>
-                <input type="text" id="ShortName" name="ShortName" class="form-control" />
-            </div>
+<div class="container py-4">
+	<h2 class="mb-3">Master Designation</h2>
+	<div class="row g-3">
+		<div class="col-md-4">
+			<div class="card shadow-sm">
+				<div class="card-body">
+					<h5 id="formTitle1" class="card-title">Add Designation</h5>
+					<form asp-action="Upsert" method="post">
+						<input asp-for="designation.DesignationID" type="hidden" />
 
-            <div class="form-check mb-3">
-                <input type="checkbox" id="IsActive" name="IsActive" class="form-check-input" />
-                <label class="form-check-label" for="IsActive">Active</label>
-            </div>
+						<div class="mb-3">
+							<label asp-for="designation.DesignationName" class="control-label m-1">Designation Name</label>
+							<input asp-for="designation.DesignationName" class="form-control" />
+							<span asp-validation-for="designation.DesignationName" class="text-danger"></span>
+						</div>
 
-            <button type="submit" class="btn btn-success">Save</button>
-            <button type="button" id="resetBtn" class="btn btn-secondary">Reset</button>
-        </form>
-    </div>
+						<div class="mb-3">
+							<label asp-for="designation.ShortName" class="control-label m-1">Short Name</label>
+							<input asp-for="designation.ShortName" class="form-control" />
+							<span asp-validation-for="designation.ShortName" class="text-danger"></span>
+						</div>
 
-    <!-- List Section -->
-    <div class="col-md-8">
-        <h4>Designation List</h4>
-        <div id="designationList">
-            @await Html.PartialAsync("_DesignationListPartial", Model.DesignationList)
-        </div>
-    </div>
+						<div class="form-group form-check col-1 m-4">
+							<input asp-for="designation.IsActive" class="form-check-input" />
+							<label asp-for="designation.IsActive" class="form-check-label">IsActive</label>
+						</div>
+
+						<div class="d-flex gap-2">
+							<button id="submitbtn" type="submit" class="btn btn-primary">Save</button>
+							<button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button>
+							<button id="regBtn" type="button" class="btn btn-dark" onclick="toggleRegister()">Register</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-8" id="register">
+			<table class="table table-striped table-bordered table-hover">
+				<thead>
+					<tr>
+						<th>Designation Name</th>
+						<th>Short Name</th>
+						<th>Is Active</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model.designations)
+					{
+						<tr data-id="@item.DesignationID" data-designationname="@item.DesignationName" data-shortname="@item.ShortName" data-isactive="@item.IsActive">
+							<td>@item.DesignationName</td>
+							<td>@item.ShortName</td>
+							<td>@(item.IsActive ? "Yes" : "No")</td>
+							<td>
+								<button type="button" class="btn btn-sm btn-primary edit-btn">Edit</button>
+								<form asp-action="Delete" asp-route-id="@item.DesignationID" method="post" style="display:inline;">
+									<button type="submit" class="btn btn-sm btn-danger"
+											onclick="return confirm('Are you sure you want to delete this item?');">
+										Delete
+									</button>
+								</form>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
 </div>
 
 @section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        // Submit form via AJAX
-        $("#designationForm").on("submit", function (e) {
-            e.preventDefault();
-            $.post("/MasterDesignation/Save", $(this).serialize(), function (result) {
-                $("#designationList").html(result);
-                resetForm();
-            });
-        });
+	<partial name="_ValidationScriptsPartial" />
+	<script>
+		function toggleRegister() {
+			// const table = document.querySelector('.col-md-8');
+			// if (table.style.display === 'none') {
+			// table.style.display = '';
+			// } else {
+			// table.style.display = 'none';
+			// }
+			var name = document.getElementById('regBtn').innerText;
+			if (name == 'Register') {
+				$('#register').hide();
+				document.getElementById('regBtn').innerText = 'Form';
+			}
+			else {
+				$('#register').show();
+				document.getElementById('regBtn').innerText = 'Register';
+			}
+		}
 
-        // Reset form
-        $("#resetBtn").on("click", function () {
-            resetForm();
-        });
+		function resetForm() {
+			document.querySelector('[name="designation.DesignationID"]').value = 0;
+			document.querySelector('[name="designation.DesignationName"]').value = '';
+			document.querySelector('[name="designation.ShortName"]').value = '';
+			document.querySelector('[name="designation.IsActive"]').checked = true;
+			document.getElementById('formTitle1').innerText = 'Add Designation';
+			document.getElementById('submitBtn').innerText = 'Save';
+		}
 
-        function resetForm() {
-            $("#DesignationID").val("");
-            $("#DesignationName").val("");
-            $("#ShortName").val("");
-            $("#IsActive").prop("checked", false);
-            $("#form-title").text("Add Designation");
-        }
 
-        // Edit button → populate form
-        $(document).on("click", ".edit-btn", function () {
-            $("#DesignationID").val($(this).data("id"));
-            $("#DesignationName").val($(this).data("name"));
-            $("#ShortName").val($(this).data("short"));
-            $("#IsActive").prop("checked", $(this).data("active") === true || $(this).data("active") === "True");
-            $("#form-title").text("Edit Designation");
-        });
-
-        // Delete button → AJAX call
-        $(document).on("click", ".delete-btn", function () {
-            if (confirm("Are you sure you want to delete this designation?")) {
-                $.post("/MasterDesignation/Save", { DesignationID: $(this).data("id"), command: "Delete" }, function (result) {
-                    $("#designationList").html(result);
-                    resetForm();
-                });
-            }
-        });
-    </script>
+		document.querySelectorAll('.edit-btn').forEach(btn => {
+			btn.addEventListener('click', function () {
+				const tr = this.closest('tr');
+				document.querySelector('[name="designation.DesignationID"]').value = tr.dataset.id;
+				document.querySelector('[name="designation.DesignationName"]').value = tr.dataset.designationname;
+				document.querySelector('[name="designation.ShortName"]').value = tr.dataset.shortname;
+				document.querySelector('[name="designation.IsActive"]').checked = tr.dataset.isactive;
+				document.getElementById('formTitle1').innerText = 'Edit Designation';
+				document.getElementById('submitbtn').innerText = 'Update';
+				window.scrollTo({ top: 0, behavior: 'smooth' });
+			});
+		});
+	</script>
 }
+
+@* ******************************************************************* *@
+
 

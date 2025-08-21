@@ -8,7 +8,7 @@ namespace HR_Module_Proj.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-
+       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MasterDepartment>(entity =>
@@ -24,8 +24,7 @@ namespace HR_Module_Proj.Data
                 
         }
         public DbSet<Staffs> MasterStaffDetails { get; set; } = null!;
-        public DbSet<MasterDepartment> MasterDepartments { get; set; } = null!;    
-       public DbSet<Staffs> MasterStaffDetails { get; set; } = null!;
-       public DbSet<MasterDesignation> MasterDesignation { get; set; } = null!;
-    }
+        public DbSet<MasterDepartment> MasterDepartments { get; set; } = null!;
+		public DbSet<MasterDesignation> MasterDesignation { get; set; } = null!;
+	}
 }
