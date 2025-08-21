@@ -19,13 +19,20 @@
 
 
 <div class="container py-4">
-	<h2 class="mb-3">Master Department</h2>
-	<div class="row g-3">
-		<div class="col-md-4">
+	<div style="display: flex; justify-content: space-between; align-items: center;">
+		<h2 class="mb-3" style="margin: 0;">Master Department</h2>
+		<button id="regBtn" type="button"
+				onclick="toggleRegister()"
+				class="btn btn-sm btn-outline-info" style="background-color:lightpink; color:black; cursor: pointer;">
+			Register
+		</button>
+	</div>
+	<div class="row g-3 justify-content-center align-items-center">
+		<div class="col-md-4" id="form">
 			<div class="card shadow-sm">
 				<div class="card-body">
 					<h5 id="formTitle" class="card-title">Add Department</h5>
-					<form asp-action="Upsert" method="post">
+					<form asp-action="SaveAndUpdate" method="post">
 						<input asp-for="department.Id" type="hidden" />
 
 						<div class="mb-3">
@@ -48,7 +55,6 @@
 						<div class="d-flex gap-2">
 							<button id="submitBtn" type="submit" class="btn btn-primary">Save</button>
 							<button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button>
-							<button id="regBtn" type="button" class="btn btn-dark" onclick="toggleRegister()">Register</button>
 						</div>
 					</form>
 				</div>
@@ -94,19 +100,15 @@
 	<partial name="_ValidationScriptsPartial" />
 	<script>
 		function toggleRegister() {
-		// const table = document.querySelector('.col-md-8');
-		// if (table.style.display === 'none') {
-		// table.style.display = '';
-		// } else {
-		// table.style.display = 'none';
-		// }
 		var name = document.getElementById('regBtn').innerText;
 			if(name == 'Register'){
-				$('#register').hide();
+				$('#register').show();
+				$('#form').hide();
 				document.getElementById('regBtn').innerText = 'Form';
 			}
 			else{
-				$('#register').show();
+				$('#register').hide();
+				$('#form').show();
 				document.getElementById('regBtn').innerText = 'Register';
 			}
 		}
