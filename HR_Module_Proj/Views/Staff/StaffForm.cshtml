@@ -1,0 +1,273 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+@model HR_Module_Proj.Models.MasterStaff
+
+@{
+    ViewBag.Title = Model.StaffId == Guid.Empty ? "Add Staff" : "Edit Staff";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<form asp-action="StaffForm" asp-controller="Staff" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="StaffId" />
+
+    <div class="mb-3">
+        <label asp-for="StaffName" class="form-label"></label>
+        <input asp-for="StaffName" class="form-control" />
+        <span asp-validation-for="StaffName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Gender" class="form-label"></label>
+        @Html.DropDownListFor(m => m.Gender, Model.GenderList, "Select Gender", new { @class = "form-control" })
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MaritalStatus" class="form-label"></label>
+        @Html.DropDownListFor(m => m.MaritalStatus, Model.MaritalStatusList, "Select Status", new { @class = "form-control" })
+        <span asp-validation-for="MaritalStatus" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DOB" class="form-label"></label>
+        <input asp-for="DOB" type="date" class="form-control" />
+        <span asp-validation-for="DOB" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+
+    @if (Model.StaffId != Guid.Empty)
+    {
+        <button type="submit" name="command" value="Delete" class="btn btn-danger">Delete</button>
+    }
+
+    <a asp-action="StaffList" class="btn btn-secondary">Cancel</a>
+</form>
+
+
+@* 
+    @model HR_Module_Proj.Models.MasterStaff
+@{
+    ViewBag.Title = Model.StaffId == Guid.Empty ? "Add Staff" : "Edit Staff";
+}
+<h2 class="mb-4">@ViewBag.Title</h2>
+
+<form asp-action="@(Model.StaffId == Guid.Empty ? "Create" : "Edit")" method="post">
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" asp-for="StaffId" />
+
+    <div class="mb-3">
+        <label asp-for="EMPStaffID" class="form-label"></label>
+        <input asp-for="EMPStaffID" class="form-control" />
+        <span asp-validation-for="EMPStaffID" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="StaffName" class="form-label"></label>
+        <input asp-for="StaffName" class="form-control" />
+        <span asp-validation-for="StaffName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MobileNo" class="form-label"></label>
+        <input asp-for="MobileNo" class="form-control" />
+        <span asp-validation-for="MobileNo" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DOB" class="form-label"></label>
+        <input asp-for="DOB" type="date" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Gender" class="form-label"></label>
+        <select asp-for="Gender" class="form-control">
+            <option value="">-- Select --</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="JoiningDate" class="form-label"></label>
+        <input asp-for="JoiningDate" type="date" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DeptID" class="form-label"></label>
+        @Html.DropDownListFor(m => m.DeptID, (List<SelectListItem>)ViewBag.Departments, "-- Select Department --", new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DeptID" class="form-label"></label>
+        @Html.DropDownListFor(m => m.DesignationID, (List<SelectListItem>)ViewBag.Designations, "-- Select Designation --", new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        @(Model.StaffId == Guid.Empty ? "Create" : "Edit")
+    </button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    @if (Model.StaffId != Guid.Empty)
+    {
+        <form asp-action="Delete" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this staff?');">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="StaffId" />
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    }
+</form> *@
+
+@* @model HR_Module_Proj.Models.MasterStaff
+@{
+    ViewBag.Title = Model.StaffId == Guid.Empty ? "Add Staff" : "Edit Staff";
+}
+
+<h2>@ViewBag.Title</h2>
+<form asp-action="StaffForm" asp-controller="Staff" method="post">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.StaffId)
+    <div class="row">
+    <div class="col-md-6 col-sm-12 col-12 form-group">
+        <label>Staff Name</label>
+        @Html.TextBoxFor(m => m.StaffName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.StaffName)
+    </div>
+
+    <div class="col-md-6 col-sm-12 col-12 form-group">
+        <label>ERPID</label>
+        @Html.TextBoxFor(m => m.EMPStaffID, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.EMPStaffID)
+    </div>
+        <div class="col-md-6 col-sm-12 col-12 form-group">
+            <label>Phone No</label>
+            @Html.TextBoxFor(m => m.MobileNo, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.MobileNo)
+        </div>
+        <div class="col-md-6 col-sm-12 col-12 form-group">
+            <label>Email</label>
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Email)
+        </div>
+        <div class="col-md-6 col-sm-12 col-12 form-group">
+            <label>DOB</label>
+            @Html.TextBoxFor(m => m.DOB, new { @class = "form-control", type = "date" })
+            @Html.ValidationMessageFor(m => m.DOB)
+        </div>
+        <div class="col-md-6 col-sm-12 col-12 form-group">
+            <label>Gender</label>
+            @Html.TextBoxFor(m => m.Gender, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Gender)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-12 col-12 form-group">
+            <label class="form-label d-block">
+                Marital Status <span class="text-danger">*</span>
+            </label>
+            @Html.DropDownListFor(m => m.MaritalStatus, Model.MaritalStatusList, "Select Status", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.MaritalStatus, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-6 col-sm-12 col-12 form-group">
+            <label>Blood Group</label>
+            @Html.TextBoxFor(m => m.BloodGroup, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.BloodGroup)
+        </div>
+        <div class="col-md-6 col-sm-12 col-12 form-group">
+            <label>Joining Date</label>
+            @Html.TextBoxFor(m => m.JoiningDate, new { @class = "form-control", type = "date" })
+            @Html.ValidationMessageFor(m => m.JoiningDate)
+        </div>
+        <div class="col-md-6 col-sm-12 col-12 form-group">
+            <label>Work Group</label>
+            @Html.TextBoxFor(m => m.WorkGroup, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.WorkGroup)
+        </div>
+        </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-12 col-12 form-group">
+            <label>Religion</label>
+            @Html.TextBoxFor(m => m.Religion, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Religion)
+        </div>
+        <div class="col-md-3 col-sm-12 col-12 form-group">
+            <label>Category</label>
+            @Html.TextBoxFor(m => m.Category, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Category)
+        </div>
+        <div class="col-md-3 col-sm-12 col-12 form-group">
+            <label>Caste</label>
+            @Html.TextBoxFor(m => m.Caste, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Caste)
+        </div>
+        <div class="col-md-3 col-sm-12 col-12 form-group">
+            <label>SubCaste</label>
+            @Html.TextBoxFor(m => m.SubCaste, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.SubCaste)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-12 col-12 form-group">
+            <label>Highest Qualification</label>
+            @Html.TextBoxFor(m => m.HighestQualification, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.HighestQualification)
+        </div>
+     
+        <div class="col-md-3 col-sm-12 col-12">
+            <label class="form-label">Designation <span style="color:red">*</span></label>
+            @Html.DropDownListFor(m => m.DesignationID, (SelectList)ViewBag.DesignationList, "Select Designation", new { @class = "form-control" })
+        </div>
+
+        <div class="col-md-3 col-sm-12 col-12">
+            <label class="form-label">Department <span style="color:red">*</span></label>
+            @Html.DropDownListFor(m => m.DeptID, (SelectList)ViewBag.DepartmentList, "Select Department", new { @class = "form-control" })
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-12 col-12 form-group">
+            <label>Current Address</label>
+            @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Address)
+        </div>
+        <div class="col-md-3 col-sm-12 col-12 form-group">
+            <label>Country</label>
+            @Html.TextBoxFor(m => m.Country, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Country)
+        </div>
+        <div class="col-md-3 col-sm-12 col-12 form-group">
+            <label>State</label>
+            @Html.TextBoxFor(m => m.State, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.State)
+        </div>
+        <div class="col-md-3 col-sm-12 col-12 form-group">
+            <label>City</label>
+            @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.City)
+        </div>
+        <div class="col-md-3 col-sm-12 col-12 form-group">
+            <label>Pincode</label>
+            @Html.TextBoxFor(m => m.Pincode, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Pincode)
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        @(Model.StaffId == Guid.Empty ? "Add" : "Update")
+    </button>
+    <a asp-action="StaffList" class="btn btn-secondary">Cancel</a>
+</form> *@

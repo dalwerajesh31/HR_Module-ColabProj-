@@ -25,5 +25,7 @@ namespace HR_Module_Proj.Data
         }
         public DbSet<Staffs> MasterStaffDetails { get; set; } = null!;
         public DbSet<MasterDepartment> MasterDepartments { get; set; } = null!;    
+       public DbSet<Staffs> MasterStaffDetails { get; set; } = null!;
+       public DbSet<MasterDesignation> MasterDesignation { get; set; } = null!;
     }
 }

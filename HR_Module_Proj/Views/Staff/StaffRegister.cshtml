@@ -1,0 +1,98 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<HR_Module_Proj.Models.Entities.Staffs>
+<h1 class="mb-4">Staff Register</h1>
+<div class="card shadow-sm">
+    <div class="card-body">
+        <table class="table table-bordered table-striped table-hover text-center align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>StaffID</th>
+                    <th>EmpStaffID</th>
+                    <th>Name</th>
+                    <th>Mobile No</th>
+                    <th>Email</th>
+                    <th>DOB</th>
+                    <th>Gender</th>
+                    <th>Joining Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var StaffList in Model)
+                {
+                    <tr>
+                        <td>@StaffList.StaffId</td>
+                        <td>@StaffList.EMPStaffID</td>
+                        <td>@StaffList.StaffName</td>
+                        <td>@StaffList.MobileNo</td>
+                        <td>@StaffList.Email</td>
+                        <td>@StaffList.DOB?.ToString("dd-MM-yyyy")</td> <!-- Fixed Problem 1 -->
+                        <td>@StaffList.Gender</td>
+                        <td>@StaffList.JoiningDate?.ToString("dd-MM-yyyy")</td> <!-- Fixed Problem 2 -->
+                        <td>
+                            <a asp-controller="Staff"
+                               asp-action="Edit"
+                               asp-route-id="@StaffList.StaffId"
+                               class="btn btn-info btn-sm">
+                                <i class="bi bi-pencil"></i> Edit
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@* @model List<HR_Module_Proj.Models.Entities.Staffs>
+<h1 class="mb-4">Staff Register</h1>
+<div class="card shadow-sm">
+    <div class="card-body">
+        <table class="table table-bordered table-striped table-hover text-center align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>StaffID</th>
+                    <th>EmpStaffID</th>
+                    <th>Name</th>
+                    <th>Mobile No</th>
+                    <th>Email</th>
+                    <th>DOB</th>
+                    <th>Gender</th>
+                    <th>Joining Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var StaffList in Model)
+                {
+                    <tr>
+                        <td>@StaffList.StaffId</td>
+                        <td>@StaffList.EMPStaffID</td>
+                        <td>@StaffList.StaffName</td>
+                        <td>@StaffList.MobileNo</td>
+                        <td>@StaffList.Email</td>
+                        <td>@StaffList.DOB("dd-MM-yyyy")</td>
+                        <td>@StaffList.Gender</td>
+                        <td>@StaffList.JoiningDate.ToString("dd-MM-yyyy")</td>
+                        <td>
+                            <a asp-controller="Staff"
+                               asp-action="Edit"
+                               asp-route-id="@StaffList.StaffId"
+                               class="btn btn-info btn-sm">
+                                <i class="bi bi-pencil"></i> Edit
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div> *@
