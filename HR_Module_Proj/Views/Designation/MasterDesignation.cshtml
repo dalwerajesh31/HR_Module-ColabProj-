@@ -16,45 +16,46 @@
 		}
 </style>
 
-
-
 <div class="container py-4">
-	<h2 class="mb-3">Master Designation</h2>
-	<div class="row g-3">
-		<div class="col-md-4">
+	<div style="display: flex; justify-content: space-between; align-items: center;">
+		<h2 class="mb-3" style="margin: 0;">Master Designation</h2>
+		<button id="regBtn" type="button"
+				onclick="toggleRegister()"
+				class="btn btn-sm btn-outline-info" style="background-color:lightpink; color:black; cursor: pointer;">
+			Register
+		</button>
+	</div>
+
+	<div class="row g-3 justify-content-center align-items-center">
+		<div class="col-md-4" id="form">
 			<div class="card shadow-sm">
 				<div class="card-body">
 					<h5 id="formTitle1" class="card-title">Add Designation</h5>
-					<form asp-action="Upsert" method="post">
-						<input asp-for="designation.DesignationID" type="hidden" />
-
+					<form asp-action="SaveAndUpdate" method="post">
+						<input asp-for="designation.DesignationId" type="hidden" />
 						<div class="mb-3">
-							<label asp-for="designation.DesignationName" class="control-label m-1">Designation Name</label>
+							<label asp-for="designation.DesignationName" 
+							class="control-label m-1">Designation Name</label>
 							<input asp-for="designation.DesignationName" class="form-control" />
 							<span asp-validation-for="designation.DesignationName" class="text-danger"></span>
 						</div>
-
 						<div class="mb-3">
 							<label asp-for="designation.ShortName" class="control-label m-1">Short Name</label>
 							<input asp-for="designation.ShortName" class="form-control" />
 							<span asp-validation-for="designation.ShortName" class="text-danger"></span>
 						</div>
-
 						<div class="form-group form-check col-1 m-4">
 							<input asp-for="designation.IsActive" class="form-check-input" />
 							<label asp-for="designation.IsActive" class="form-check-label">IsActive</label>
 						</div>
-
 						<div class="d-flex gap-2">
-							<button id="submitbtn" type="submit" class="btn btn-primary">Save</button>
+							<button id="submitBtn" type="submit" class="btn btn-primary">Save</button>
 							<button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button>
-							<button id="regBtn" type="button" class="btn btn-dark" onclick="toggleRegister()">Register</button>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
-
 		<div class="col-md-8" id="register">
 			<table class="table table-striped table-bordered table-hover">
 				<thead>
@@ -68,13 +69,13 @@
 				<tbody>
 					@foreach (var item in Model.designations)
 					{
-						<tr data-id="@item.DesignationID" data-designationname="@item.DesignationName" data-shortname="@item.ShortName" data-isactive="@item.IsActive">
+						<tr data-id="@item.DesignationId" data-designationname="@item.DesignationName" data-shortname="@item.ShortName" data-isactive="@item.IsActive">
 							<td>@item.DesignationName</td>
 							<td>@item.ShortName</td>
 							<td>@(item.IsActive ? "Yes" : "No")</td>
 							<td>
 								<button type="button" class="btn btn-sm btn-primary edit-btn">Edit</button>
-								<form asp-action="Delete" asp-route-id="@item.DesignationID" method="post" style="display:inline;">
+								<form asp-action="Delete" asp-route-id="@item.DesignationId" method="post" style="display:inline;">
 									<button type="submit" class="btn btn-sm btn-danger"
 											onclick="return confirm('Are you sure you want to delete this item?');">
 										Delete
@@ -87,32 +88,27 @@
 			</table>
 		</div>
 	</div>
-
 </div>
 
 @section Scripts {
 	<partial name="_ValidationScriptsPartial" />
 	<script>
 		function toggleRegister() {
-			// const table = document.querySelector('.col-md-8');
-			// if (table.style.display === 'none') {
-			// table.style.display = '';
-			// } else {
-			// table.style.display = 'none';
-			// }
 			var name = document.getElementById('regBtn').innerText;
 			if (name == 'Register') {
-				$('#register').hide();
+				$('#register').show();
+				$('#form').hide();
 				document.getElementById('regBtn').innerText = 'Form';
 			}
 			else {
-				$('#register').show();
+				$('#register').hide();
+				$('#form').show();
 				document.getElementById('regBtn').innerText = 'Register';
 			}
 		}
 
 		function resetForm() {
-			document.querySelector('[name="designation.DesignationID"]').value = 0;
+			document.querySelector('[name="designation.DesignationId"]').value = 0;
 			document.querySelector('[name="designation.DesignationName"]').value = '';
 			document.querySelector('[name="designation.ShortName"]').value = '';
 			document.querySelector('[name="designation.IsActive"]').checked = true;
@@ -124,7 +120,7 @@
 		document.querySelectorAll('.edit-btn').forEach(btn => {
 			btn.addEventListener('click', function () {
 				const tr = this.closest('tr');
-				document.querySelector('[name="designation.DesignationID"]').value = tr.dataset.id;
+				document.querySelector('[name="designation.DesignationId"]').value = tr.dataset.id;
 				document.querySelector('[name="designation.DesignationName"]').value = tr.dataset.designationname;
 				document.querySelector('[name="designation.ShortName"]').value = tr.dataset.shortname;
 				document.querySelector('[name="designation.IsActive"]').checked = tr.dataset.isactive;

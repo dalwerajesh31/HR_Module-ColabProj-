@@ -1,5 +1,4 @@
-﻿using HR_Module_Proj.Data;
-using HR_Module_Proj.Models;
+﻿using HR_Module_Proj.Models;
 using HR_Module_Proj.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,27 +13,26 @@ namespace HR_Module_Proj.Controllers
 		{
 			_context = context;
 		}
-
 		public async Task<IActionResult> MasterDesignation()
 		{
 			Designations model = new Designations();
+			
 			model.designations = await _context.MasterDesignation.ToListAsync();
 			return View(model);
 		}
-
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Upsert([Bind(Prefix = "designation")] MasterDesignation model)
+		public async Task<IActionResult> SaveAndUpdate([Bind(Prefix = "designation")] MasterDesignation model)
 		{
 			if (ModelState.IsValid)
 			{
-				if (model.DesignationID == 0)
+				if (model.DesignationId == 0)
 				{
 					_context.MasterDesignation.Add(model);
 				}
 				else
 				{
-					var existingDesignation = await _context.MasterDesignation.FindAsync(model.DesignationID);
+					var existingDesignation = await _context.MasterDesignation.FindAsync(model.DesignationId);
 					if (existingDesignation == null)
 					{
 						return NotFound();
@@ -59,7 +57,6 @@ namespace HR_Module_Proj.Controllers
 				return View("MasterDesignation", vmInValid);
 			}
 		}
-
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Delete(int id)
@@ -70,6 +67,5 @@ namespace HR_Module_Proj.Controllers
 			await _context.SaveChangesAsync();
 			return RedirectToAction(nameof(MasterDesignation));
 		}
-
 	}
 }
