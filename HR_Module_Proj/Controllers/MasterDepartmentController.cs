@@ -8,19 +8,16 @@ namespace HR_Module_Proj.Controllers
     public class MasterDepartmentController : Controller
     {
         private readonly Data.ApplicationDbContext _context;
-
         public MasterDepartmentController(Data.ApplicationDbContext context)
         {
             _context = context;
         }
-
         public async Task<IActionResult> Index()
         {
             MasterDepartmentVM model = new MasterDepartmentVM();
             model.departments = await _context.MasterDepartments.ToListAsync();
             return View(model);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SaveAndUpdate([Bind(Prefix = "department")] MasterDepartment model)

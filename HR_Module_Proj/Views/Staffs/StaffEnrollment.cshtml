@@ -1,0 +1,186 @@
+﻿@model HR_Module_Proj.Models.MasterStaff
+
+@{
+	ViewData["Title"] = "Master Staff";
+}
+
+<style>
+	.auto-width-table {
+		width: auto !important;
+		table-layout: auto !important;
+	}
+
+		.auto-width-table th,
+		.auto-width-table td {
+			white-space: nowrap;
+		}
+</style>
+<div class="container py-4">
+	<div style="display: flex; justify-content: space-between; align-items: center;">
+		<h2 class="mb-3" style="margin: 0;">Master Staff</h2>
+		<button id="regBtn" type="button"
+				onclick="toggleRegister()"
+				class="btn btn-sm btn-outline-info" style="background-color:lightpink; color:black; cursor: pointer;">
+			Register
+		</button>
+	</div>
+	<div class="row g-3 justify-content-center align-items-center">
+		<div class="col-md-4" id="form">
+			<div class="card shadow-sm">
+				<div class="card-body">
+					<h5 id="formTitle1" class="card-title">Add Master Staff</h5>
+					<form asp-action="SaveAndUpdate" method="post">
+						<input asp-for="MasterStaffDetail.StaffId" type="hidden" />
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.StaffName"
+								   class="control-label m-1">StaffName</label>
+							<input asp-for="MasterStaffDetail.StaffName" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.StaffName" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.EMPStaffID" class="control-label m-1">EMP StaffID</label>
+							<input asp-for="MasterStaffDetail.EMPStaffID" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.EMPStaffID" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.Gender" class="control-label m-1">Gender</label>
+							<input asp-for="MasterStaffDetail.Gender" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.Gender" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.MaritalStatus" class="control-label m-1">Marital Status</label>
+							<input asp-for="MasterStaffDetail.MaritalStatus" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.MaritalStatus" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.BloodGroup" class="control-label m-1">Blood Group</label>
+							<input asp-for="MasterStaffDetail.BloodGroup" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.BloodGroup" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.Email" class="control-label m-1"> Email</label>
+							<input asp-for="MasterStaffDetail.Email" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.Email" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.MobileNo" class="control-label m-1">MobileNo</label>
+							<input asp-for="MasterStaffDetail.MobileNo" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.MobileNo" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.DOB" class="control-label m-1"> DOB</label>
+							<input asp-for="MasterStaffDetail.DOB" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.DOB" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.Religion" class="control-label m-1"> Religion</label>
+							<input asp-for="MasterStaffDetail.Religion" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.Religion" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.Category" class="control-label m-1"> Category</label>
+							<input asp-for="MasterStaffDetail.Category" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.Category" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.Caste" class="control-label m-1"> Caste</label>
+							<input asp-for="MasterStaffDetail.Caste" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.Caste" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.SubCaste" class="control-label m-1"> SubCaste</label>
+							<input asp-for="MasterStaffDetail.SubCaste" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.SubCaste" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.HighestQualification" class="control-label m-1"> HighestQualification</label>
+							<input asp-for="MasterStaffDetail.HighestQualification" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.HighestQualification" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.Address" class="control-label m-1"> Address</label>
+							<input asp-for="MasterStaffDetail.Address" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.Address" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.Country" class="control-label m-1"> Country</label>
+							<input asp-for="MasterStaffDetail.Country" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.Country" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.State" class="control-label m-1"> State</label>
+							<input asp-for="MasterStaffDetail.State" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.State" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.City" class="control-label m-1"> City</label>
+							<input asp-for="MasterStaffDetail.City" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.City" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.Pincode" class="control-label m-1"> Pincode</label>
+							<input asp-for="MasterStaffDetail.Pincode" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.Pincode" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.DepartmentID" class="control-label m-1"> Department</label>
+							<input asp-for="MasterStaffDetail.DepartmentID" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.DepartmentID" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.JoiningDate" class="control-label m-1"> JoiningDate</label>
+							<input asp-for="MasterStaffDetail.JoiningDate" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.JoiningDate" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.DesignationID" class="control-label m-1"> Designation</label>
+							<input asp-for="MasterStaffDetail.DesignationID" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.DesignationID" class="text-danger"></span>
+						</div>
+						<div class="mb-3">
+							<label asp-for="MasterStaffDetail.WorkGroup" class="control-label m-1"> WorkGroup</label>
+							<input asp-for="MasterStaffDetail.WorkGroup" class="form-control" />
+							<span asp-validation-for="MasterStaffDetail.WorkGroup" class="text-danger"></span>
+						</div>
+						<div class="d-flex gap-2">
+							<button id="submitBtn" type="submit" class="btn btn-primary">Save</button>
+							<button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-8" id="register">
+			<table class="table table-striped table-bordered table-hover">
+				<thead>
+					<tr>
+						<th>Designation Name</th>
+						<th>Short Name</th>
+						<th>Is Active</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				@* <tbody>
+					@foreach (var item in Model.MasterStaffDetails)
+					{
+						<tr data-id="@item.DesignationId" data-designationname="@item.DesignationName" data-shortname="@item.ShortName" data-isactive="@item.IsActive">
+							<td>@item.DesignationName</td>
+							<td>@item.ShortName</td>
+							<td>@(item.IsActive ? "Yes" : "No")</td>
+							<td>
+								<button type="button" class="btn btn-sm btn-primary edit-btn">Edit</button>
+								<form asp-action="Delete" asp-route-id="@item.DesignationId" method="post" style="display:inline;">
+									<button type="submit" class="btn btn-sm btn-danger"
+											onclick="return confirm('Are you sure you want to delete this item?');">
+										Delete
+									</button>
+								</form>
+							</td>
+						</tr>
+					}
+				</tbody> *@
+			</table>
+		</div>
+	</div>
+</div>
+

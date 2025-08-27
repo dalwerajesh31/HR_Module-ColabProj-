@@ -8,7 +8,6 @@ namespace HR_Module_Proj.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MasterDepartment>(entity =>
@@ -32,6 +31,18 @@ namespace HR_Module_Proj.Data
                 entity.Property(e => e.UpdatedAt).HasDefaultValueSql("GETUTCDATE()");
                 entity.Property(e => e.IsActive).HasDefaultValue(true);
             });
+            
+            modelBuilder.Entity<MasterDesignation>(entity =>
+			      {
+                    entity.HasKey(e => e.DesignationId);
+
+				                  entity.Property(e => e.DesignationId)
+					                          .ValueGeneratedOnAdd(); // ensures it is IDENTITY
+
+				                  entity.Property(e => e.DesignationName)
+                                        .IsRequired()
+					                               .HasMaxLength(100);
+			       });
         }
         public DbSet<Staffs> MasterStaffDetails { get; set; } = null!;
         public DbSet<MasterDepartment> MasterDepartments { get; set; } = null!;
