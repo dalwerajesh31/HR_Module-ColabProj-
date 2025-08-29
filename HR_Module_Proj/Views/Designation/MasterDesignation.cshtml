@@ -3,19 +3,16 @@
 @{
 	ViewData["Title"] = "Designation Register";
 }
-
 <style>
 	.auto-width-table {
 		width: auto !important;
 		table-layout: auto !important;
 	}
-
 		.auto-width-table th,
 		.auto-width-table td {
 			white-space: nowrap;
 		}
 </style>
-
 <div class="container py-4">
 	<div style="display: flex; justify-content: space-between; align-items: center;">
 		<h2 class="mb-3" style="margin: 0;">Master Designation</h2>
@@ -25,7 +22,6 @@
 			Register
 		</button>
 	</div>
-
 	<div class="row g-3 justify-content-center align-items-center">
 		<div class="col-md-4" id="form">
 			<div class="card shadow-sm">
@@ -106,7 +102,6 @@
 				document.getElementById('regBtn').innerText = 'Register';
 			}
 		}
-
 		function resetForm() {
 			document.querySelector('[name="designation.DesignationId"]').value = 0;
 			document.querySelector('[name="designation.DesignationName"]').value = '';
@@ -115,8 +110,6 @@
 			document.getElementById('formTitle1').innerText = 'Add Designation';
 			document.getElementById('submitBtn').innerText = 'Save';
 		}
-
-
 		document.querySelectorAll('.edit-btn').forEach(btn => {
 			btn.addEventListener('click', function () {
 				const tr = this.closest('tr');
