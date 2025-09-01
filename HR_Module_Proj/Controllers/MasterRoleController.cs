@@ -22,7 +22,7 @@ namespace HR_Module_Proj.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SaveAndUpdate([Bind(Prefix = "department")] MasterRoles model)
+        public async Task<IActionResult> SaveAndUpdate([Bind(Prefix = "role")] MasterRoles model)
         {
             if (ModelState.IsValid)
             {

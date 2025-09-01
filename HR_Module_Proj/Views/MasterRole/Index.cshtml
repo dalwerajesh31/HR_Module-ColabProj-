@@ -82,7 +82,7 @@
 					}
 					@foreach (var item in Model.roles)
 					{
-						<tr data-id="@item.Id" data-roleName="@item.RoleName" data-shortname="@item.ShortName" data-isactive="@item.IsActive">
+						<tr data-id="@item.Id" data-rolename="@item.RoleName" data-shortname="@item.ShortName" data-isactive="@item.IsActive">
 							<td>@SerialNo</td>
 							<td>@item.RoleName</td>
 							<td>@item.ShortName</td>
@@ -125,7 +125,7 @@
 
 		function resetForm() {
 		document.querySelector('[name="role.Id"]').value = 0;
-		document.querySelector('[name="role.roleName"]').value = '';
+		document.querySelector('[name="role.RoleName"]').value = '';
 		document.querySelector('[name="role.ShortName"]').value = '';
 		document.querySelector('[name="role.IsActive"]').checked = true;
 		document.getElementById('formTitle').innerText = 'Add role';
@@ -140,12 +140,13 @@
 		btn.addEventListener('click', function () {
 		const tr = this.closest('tr');
 		document.querySelector('[name="role.Id"]').value = tr.dataset.id;
-		document.querySelector('[name="role.RoleName"]').value = tr.dataset.departmentname;
+		document.querySelector('[name="role.RoleName"]').value = tr.dataset.rolename;
 		document.querySelector('[name="role.ShortName"]').value = tr.dataset.shortname;
 		document.querySelector('[name="role.IsActive"]').checked = tr.dataset.isactive;
 		document.getElementById('formTitle').innerText = 'Edit role';
 		document.getElementById('submitBtn').innerText = 'Update';
 		window.scrollTo({ top: 0, behavior: 'smooth' });
+		toggleRegister();
 		});
 		});
 	</script>
